@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+<title>CALLCENTER</title>
+<style>
+  body {
+      background-color: #343a40;
+    }
+    .title {
+      font-size: 4rem;
+      font-family: 'Lucida Bright', sans-serif;
+      background-color: #94E1F4 ;
+      color: #2B3436;
+      padding: 1.2rem;
+      border-radius: 5px;
+    }
+    table {
+      background-color: #343a40;
+      font-size: 1.1rem;
+    }
+    table tr:nth-child(even) {
+      font-family: 'Lucida Bright', sans-serif;
+      background-color: #494848; 
+    }
+    table tr:nth-child(odd) {
+      font-family: 'Lucida Bright', sans-serif;
+      background-color: #A7A7A7; 
+    }
+    table th{
+      background-color: #494848;
+    }
+    table td {
+      font-family: 'Lucida Bright', sans-serif;
+      color: #fff;
+    }
+    .modal-content {
+      background-color: #343a40;
+      color: #fff;
+    }
+  
+    .modal-footer button {
+      color: #fff;
+      background-color: #007bff;
+    }
+  
+    .modal-body label {
+      color: #fff;
+    }
+
+    .modal-body input {
+      color: #fff;
+      background-color: #494848;
+      border: none;
+    }
+ 
+  </style>
+</head>
+<body>
+<div class="container" id="usuarios">
+    <div class="row">
+        <div class="col-md-12 mt-5">
+          <h1 class="title text-center">CALLCENTER APP</h1>
+          <hr>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+
+          <b-modal ref="my-modal" hide-footer title="Registrar Nuevo Cliente">
+            <div>
+              <form action="" @submit.prevent="onSubmit">
+                <div class="form-group">
+                  <label for="">ID</label>
+                  <input type="text" v-model="id_usuarios" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">Nombre</label>
+                  <input type="text" v-model="nombre" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">Apellido</label>
+                  <input type="text" v-model="apellido" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">Correo</label>
+                  <input type="text" v-model="correo" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">Telefono</label>
+                  <input type="text" v-model="telefono" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">ID_Agente</label>
+                  <input type="text" v-model="id_agentes" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">ID_Empresa</label>
+                  <input type="text" v-model="id_empresas" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="">Departamento</label>
+                  <input type="text" v-model="departamento" class="form-control">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-sm btn-outline-info">Registrar</button>
+                </div>
+              </form>
+            </div>
+            <b-button class="mt-3" variant="outline-danger" block @click="hideModal('my-modal')">Cerrar</b-button>
+          </b-modal>
+          
+          <div>
+            <b-modal ref="my-modal1" hide-footer title="Editar Cliente">
+              <div>
+                <form action="" @submit.prevent="onUpdate">
+                  <div class="form-group">
+                      <label for="">ID</label>
+                      <input type="text" v-model="edit_id_usuarios" class="form-control">
+                  </div>
+                  <div class="form-group">
+                      <label for="">Nombre</label>
+                      <input type="text" v-model="edit_nombre" class="form-control">
+                  </div>
+                  <div class="form-group">
+                      <label for="">Apellido</label>
+                      <input type="text" v-model="edit_apellido" class="form-control">
+                    </div>
+                  <div class="form-group">
+                    <label for="">Correo</label>
+                    <input type="text" v-model="edit_correo" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Telefono</label>
+                    <input type="text" v-model="edit_telefono" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">ID_Agente</label>
+                    <input type="text" v-model="edit_id_agentes" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">ID_Empresa</label>
+                    <input type="text" v-model="edit_id_empresas" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Departamento</label>
+                    <input type="text" v-model="edit_departamento" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-sm btn-outline-info">Actualizar</button>
+                  </div>
+                </form>
+              </div>
+              <b-button class="mt-3" variant="outline-danger" block @click="hideModal('my-modal1')">Cerrar</b-button>
+            </b-modal>
+
+            
+          </div>
+                  
+        </div>
+    </div>
+
+      </div>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Correo</th>
+              <th>Telefono</th>
+              <th>ID_Agente</th>
+              <th>ID_Empresa</th>
+              <th>Departamento</th>
+              <th>Fecha Registro</th>
+              <th>Accion</th>         
+            </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(record, i) in records" :key="record.id">       
+              <td>{{record.id_usuarios}}</td>
+              <td>{{record.nombre}}</td>
+              <td>{{record.apellido}}</td>
+              <td>{{record.correo}}</td>
+              <td>{{record.telefono}}</td>
+              <td>{{record.id_agentes}}</td>
+              <td>{{record.id_empresas}}</td>
+              <td>{{record.departamento}}</td>
+              <td>{{record.fecha_registro}}</td>
+              <td>
+                <button @click="editRecord(record.id_usuarios)" class="btn btn-sm btn-outline-info"  style="background-color: #C2F5C8; color: black;">Edit</button>
+                <button @click="deleteRecord(record.id_usuarios)" class="btn btn-sm btn-outline-danger" style="background-color: red; color: white;">Delete</button>               
+              </td>
+            </tr>
+        </tbody>
+        </table>
+        <b-button id="show-btn" @click="showModal('my-modal')" class="btn-dark mx-auto d-block" style="background-color: #9065AD; font-size: 20px; font-family: Lucida Bright, sans-serif; padding: 16px 28px;">Registrar Cliente</b-button>
+      </div>
+    </div>  
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  var app = new Vue({
+    el: '#usuarios',
+    data: {
+      id_usuarios: '',
+      nombre: '',
+      apellido: '',
+      correo: '',
+      telefono: '',
+      id_agentes: '',
+      id_empresas: '',
+      departamento: '',
+      records: [],
+      edit_id_usuarios: '',
+      edit_nombre: '',
+      edit_apellido: '',
+      edit_correo: '',
+      edit_telefono: '',
+      edit_id_agentes: '',
+      edit_id_empresas: '',
+      edit_departamento: ''   
+  },
+    methods:{
+      showModal(id) {
+                this.$refs[id].show()
+      },
+      hideModal(id) {
+                this.$refs[id].hide()
+      },
+      onSubmit(){
+          if (this.id_usuarios !== '' &&this.nombre !== '' && this.apellido !== '' && this.correo !== '' && this.telefono !== '' && this.id_agentes !== ''&& this.id_empresas !=='' && this.departamento !== '') {
+              var config = { headers: {  
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'}
+              }
+              axios.post("http://127.0.0.1:5000/insert", 
+                  { id_usuarios : this.id_usuarios ,nombre : this.nombre, apellido : this.apellido, correo : this.correo, telefono : this.telefono, id_agentes : this.id_agentes, id_empresas: this.id_empresas, departamento : this.departamento}, config
+              )
+              .then(res => {
+                  console.log(res)
+                  alert('Cliente Registrado Existosamente')
+                  this.id_usuarios = ''
+                  this.nombre = ''
+                  this.apellido = ''
+                  this.correo = ''
+                  this.telefono = ''
+                  this.id_agentes = ''
+                  this.id_empresas = ''
+                  this.departamento = ''
+    
+                  app.hideModal('my-modal')
+                  app.getRecords()
+              })
+              .catch(err => {
+                  console.log(err)
+              })
+          }else{
+            alert('empty')
+          }
+      },                             
+      
+      getRecords(){
+        axios({
+          url: 'http://127.0.0.1:5000/',
+          method: 'get'
+        })
+        .then(res => {
+          console.log(res)
+          this.records = res.data.usuarios
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      editRecord(id){
+        axios.get("http://127.0.0.1:5000/edit/" + id)
+          .then(res => {
+              console.log(res.data)
+              this.edit_id_usuarios = res.data.editmember['id_usuarios']
+              this.edit_nombre = res.data.editmember['nombre']
+              this.edit_apellido = res.data.editmember['apellido']
+              this.edit_correo = res.data.editmember['correo']
+              this.edit_telefono = res.data.editmember['telefono']
+              this.edit_id_agentes = res.data.editmember['id_agentes']
+              this.edit_id_empresas = res.data.editmember['id_empresas']
+              this.edit_departamento = res.data.editmember['departamento']
+              app.showModal('my-modal1')
+          })
+          .catch(err => {
+            console.log(err)
+          }) 
+      },
+      onUpdate(){
+          if (this.edit_id_usuarios !== '' && this.edit_nombre !== '' && this.edit_apellido !== '' && this.edit_correo !== '' && this.edit_telefono !== '' && this.edit_id_agentes !== '' && this.edit_id_empresas !== '' && this.edit_departamento !== '') {
+ 
+              var config = { headers: {  
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*'}
+              }
+              axios.post("http://127.0.0.1:5000/update", 
+                  { edit_id_usuarios : this.edit_id_usuarios, edit_nombre : this.edit_nombre, edit_apellido : this.edit_apellido, edit_correo : this.edit_correo, edit_telefono :this.edit_telefono, edit_id_agentes : this.edit_id_agentes, edit_id_empresas: this.edit_id_empresas, edit_departamento : this.edit_departamento}, config
+              )
+              .then(res => {
+                  console.log(res)
+                  alert('Cliente Actualizado Exitosamente');
+          
+                  this.edit_id_usuarios = '';
+                  this.edit_nombre = '';
+                  this.edit_apellido = '';
+                  this.edit_correo = '';
+                  this.edit_telefono = '';
+                  this.edit_id_agentes = '';
+                  this.edit_id_empresas = '';
+                  this.edit_departamento = '';
+          
+                  app.hideModal('my-modal1');
+                  app.getRecords();
+              })
+                .catch(err => {
+                  console.log(err)
+              })
+
+          }else{
+             alert('empty')
+          }
+      },
+
+      deleteRecord(id){
+          if (window.confirm('Quieres Eliminar este registro?')) {
+               axios.get("http://127.0.0.1:5000/delete/" + id)
+               .then(res => {
+                  console.log(res)
+                   alert('Cliente Eliminado Exitosamente')
+                  app.getRecords();
+               })
+              .catch(err => {
+                   console.log(err)
+              })
+          }
+      },
+         
+    },
+    mounted: function(){
+      this.getRecords()
+    }
+
+  })
+</script>
+</body>   
+</html>
+    
